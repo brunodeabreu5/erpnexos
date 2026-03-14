@@ -120,6 +120,25 @@ def migrate_database():
             else:
                 print("[OK] created_at column already exists")
 
+            # Migration 10: Add category_id if missing
+            if 'category_id' not in existing_columns:
+                print("Adding 'category_id' column...")
+                # First check if categories table exists
+                result = conn.execute(text("""
+                    SELECT EXISTS (
+                        SELECT FROM information_schema.tables
+                        WHERE table_name = 'categories'
+                    )
+                """))
+                if result.scalar():
+                    conn.execute(text("ALTER TABLE products ADD COLUMN category_id INTEGER REFERENCES categories(id)"))
+                    print("[OK] Added category_id with foreign key")
+                else:
+                    conn.execute(text("ALTER TABLE products ADD COLUMN category_id INTEGER"))
+                    print("[OK] Added category_id without foreign key (categories table doesn't exist yet)")
+            else:
+                print("[OK] category_id column already exists")
+
             # Commit transaction
             trans.commit()
             print("\n[OK] Database migration completed successfully!")
