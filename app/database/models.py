@@ -145,20 +145,24 @@ class Product(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
-    sku = Column(String(50), unique=True, nullable=True, index=True)
+    barcode = Column(String(50), unique=True, nullable=True, index=True)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=True, index=True)
-    price = Column(Numeric(10, 2), nullable=False)
+    sale_price = Column(Numeric(10, 2), nullable=False)
     cost_price = Column(Numeric(10, 2), nullable=True)
     stock = Column(Numeric(10, 2), nullable=False, default=0)
     reorder_point = Column(Numeric(10, 2), default=10, nullable=False)
+    description = Column(Text, nullable=True)
+    supplier_id = Column(Integer, ForeignKey('suppliers.id'), nullable=True, index=True)
     is_active = Column(Boolean, default=True, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)
 
     # Relationships
     category = relationship("Category", backref="products")
+    supplier = relationship("Supplier", backref="products")
 
     def __repr__(self) -> str:
-        return f"<Product(id={self.id}, name='{self.name}', sku='{self.sku}')>"
+        return f"<Product(id={self.id}, name='{self.name}', barcode='{self.barcode}')>"
 
     # Indexes for common queries
     __table_args__ = (

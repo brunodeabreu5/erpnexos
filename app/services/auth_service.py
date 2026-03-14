@@ -224,11 +224,10 @@ def authenticate_user(username: str, password: str) -> Tuple[bool, Optional[str]
             try:
                 audit_log = AuditLog(
                     user_id=user.id,
-                    username=username,
-                    action='LOGIN',
-                    details='User logged in successfully',
-                    ip_address=None,  # Could be enhanced to capture IP
-                    timestamp=datetime.now()
+                    action='LOGIN_SUCCESS',
+                    entity_type='User',
+                    entity_id=user.id,
+                    new_values={'username': username, 'login_time': datetime.now().isoformat()}
                 )
                 db.add(audit_log)
                 db.commit()
