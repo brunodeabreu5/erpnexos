@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Environment variables (never commit secrets)
+.env
+
+# PyInstaller
+*.spec
+
+# Generated reports/artefacts
+report.pdf
+
+# IDE / editor
+.idea/
+*.swp
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Testing / lint
+*.log
+logs/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
