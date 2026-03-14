@@ -8,7 +8,7 @@ Standard Return Type:
     - (False, error_message, None): Failure with error description
 """
 import logging
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 from app.database.db import get_db_session
 from app.database.models import Customer
 from app.types import Result, success, failure
